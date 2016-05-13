@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery data list</title>
+    <link href="jquery.datalist.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="suggest__wrapper">
+    <input type="text" class="js-datalist" style="width: 200px" data-select="js-select">
+    <select id="js-select">
+        <option value="1" selected>A八点十分</option>
+        <option value="2">dafa</option>
+        <option value="3">adf</option>
+        <option value="4">全qerqwe部</option>
+        <option value="5">qqerqwervdascvas</option>
+    </select>
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+<script src="jquery.datalist.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.js-datalist').datalist();
+    });
+</script>
+</body>
+</html>
