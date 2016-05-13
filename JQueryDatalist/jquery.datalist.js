@@ -13,7 +13,7 @@
                 $suggests = $('<ul id="' + suggestId + '"  style="display: none;"></ul>'),
                 createSuggest,
                 hiddenSuggest,
-                width = $inputSelf.width() - 2,
+                width = $inputSelf.outerWidth() - 6,
                 height = $inputSelf.outerHeight(),
                 hoverOnSuggest = false;
 
@@ -61,7 +61,7 @@
                 createSuggest(text, $select);
             });
 
-            $inputSelf.on('click dbclick', function () {
+            $inputSelf.on('click dbclick focus', function () {
                 createSuggest($(this).val());
             });
 
@@ -86,7 +86,7 @@
                 if (target.tagName.toUpperCase() === 'LI') {
                     $inputSelf.val($(target).data('text'));
                     $('#' + selectId + ' option:selected').removeAttr('selected');
-                    $select.find("option[value='" + $(target).data('value') + "']").attr("selected",true);
+                    $select.find("option[value='" + $(target).data('value') + "']").attr("selected", true);
                 }
 
                 $suggests.css('display', 'none');
