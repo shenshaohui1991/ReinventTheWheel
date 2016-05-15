@@ -3,42 +3,44 @@
  */
 (function ($) {
     $.fn.datalist = function () {
-        var inputs = $(this);
-
-        inputs.each(function () {
+        $(this).each(function () {
             var $inputSelf = $(this),
                 selectId = $inputSelf.data('select') || '',
-                $select = $('#' + selectId),
                 suggestId = selectId + '_' + parseInt(Math.random() * 10000),
-                $suggests = $('<ul id="' + suggestId + '"  style="display: none;"></ul>'),
+                $select = $('#' + selectId),
+                $options = $('#' + selectId + ' option'),
+                $suggests = $('<ul id="' + suggestId + '"></ul>'),
                 createSuggest,
-                hiddenSuggest,
+            // without border and padding, total 6px
                 width = $inputSelf.outerWidth() - 6,
-                height = $inputSelf.outerHeight(),
-                hoverOnSuggest = false;
+                height = $inputSelf.outerHeight();
 
             $suggests.css({
                 'top': height + 'px',
-                'width': width + 'px'
+                'width': width + 'px',
+                'display': 'none'
             });
 
+            if ($select.length == 0) {
+                throw new Error('you need check the attribute data-select in input');
+            } else {
+                $select.before($suggests).css('display', 'none');
+            }
+
             createSuggest = function (text) {
-                var $optionsCtrl = $('#' + selectId + ' option'),
-                    result = [];
+                var result = [],
+                    matchStr = text || '';
 
-                text = text || '';
-
-                for (var i = 0, len = $optionsCtrl.length; i < len; i++) {
-                    if ($($optionsCtrl[i]).text().indexOf(text) > -1) {
+                for (var i = 0, len = $options.length; i < len; i++) {
+                    if ($($options[i]).text().indexOf(matchStr) > -1) {
                         result.push({
-                            text: $($optionsCtrl[i]).text(),
-                            value: $($optionsCtrl[i]).val()
+                            text: $($options[i]).text(),
+                            value: $($options[i]).val()
                         });
                     }
                 }
 
-                $('#' + suggestId).empty();
-                $suggests.css('display', 'none');
+                $suggests.empty().css('display', 'none');
 
                 result.forEach(function (li) {
                     $suggests.append($('<li data-value="' + li.value + '" data-text="' + li.text + '" >' + li.text + '</li>'));
@@ -47,18 +49,8 @@
                 $suggests.css('display', 'block');
             };
 
-            hiddenSuggest = function () {
-                $suggests.css('display', 'none');
-            };
-
-            // hidden
-            $select.before($suggests);
-            $select.css('display', 'none');
-
-            // bind event
             $inputSelf.on('input keyup paste cut', function () {
-                var text = $(this).val();
-                createSuggest(text, $select);
+                createSuggest($(this).val());
             });
 
             $inputSelf.on('click dbclick focus', function () {
@@ -66,20 +58,10 @@
             });
 
             $inputSelf.on('blur', function () {
-                if (!hoverOnSuggest) {
-                    hiddenSuggest();
-                }
+                $suggests.css('display', 'none');
             });
 
-            $suggests.on('mouseenter', function () {
-                hoverOnSuggest = true;
-            });
-
-            $suggests.on('mouseleave', function () {
-                hoverOnSuggest = false;
-            });
-
-            $('#' + suggestId).on('click', function (e) {
+            $suggests.on('mousedown', function (e) {
                 var event = e || window.event,
                     target = event.target ? event.target : event.srcElement;
 
@@ -90,7 +72,6 @@
                 }
 
                 $suggests.css('display', 'none');
-                hoverOnSuggest = false;
             });
 
         });
