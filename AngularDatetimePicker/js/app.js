@@ -17,12 +17,15 @@
                     // = 双向绑定
                     // & 函数
                     // @ 单向绑定
-                    datetime: '='
+                    datetime: '=',
+                    needtime: '@'
                 },
                 link: function (scope, element, attrs) {
+                    var format = scope.needtime ? 'Y-m-d H:i' : 'Y-m-d';
+
                     $(".datetime").datetimepicker({
-                        format:'Y-m-d H:i',
-                        lang:'zh',
+                        format: format,
+                        lang: 'zh',
                         yearStart: 2014
                     });
                 }
