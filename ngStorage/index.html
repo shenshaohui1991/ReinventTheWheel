@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>ng storage</title>
+</head>
+<body ng-controller="myCtrl">
+<div>数字: {{count}},<a ng-click="addCount()">加1</a></div>
+<div>对象: {{storageObj.a}}</div>
+<div>数组: {{storageArr[1]}}</div>
+
+<script src="//cdn.bootcss.com/angular.js/1.2.25/angular.js"></script>
+<script src="ngStorage.js"></script>
+<script>
+    (function () {
+        angular
+                .module('app', ['ngStorage'])
+                .controller('myCtrl', ['$scope', 'ngStorageProvider', function ($scope, ngStorageProvider) {
+                    $scope.count = ngStorageProvider.getItem('count');
+                    $scope.obj = {
+                        'a': 1,
+                        'b': 2,
+                        'c': 3
+                    };
+                    $scope.storageObj = JSON.parse(ngStorageProvider.getItem('obj'));
+                    $scope.arr = [1, 3, 5, 6, 7];
+                    $scope.storageArr = JSON.parse(ngStorageProvider.getItem('arr'));
+
+                    if (!$scope.storageObj) {
+                        ngStorageProvider.setItem('obj', JSON.stringify($scope.obj));
+                    }
+
+                    if (!$scope.storageArr) {
+                        ngStorageProvider.setItem('arr', JSON.stringify($scope.arr));
+                    }
+
+                    $scope.addCount = addCount;
+
+                    function addCount() {
+                        ngStorageProvider.setItem('count', ++$scope.count);
+                    }
+                }]);
+    })();
+</script>
+</body>
+</html>
