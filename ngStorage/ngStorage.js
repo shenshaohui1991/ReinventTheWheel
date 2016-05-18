@@ -4,56 +4,54 @@
 (function (factory) {
     'use strict';
     if (typeof exports === 'object') {
-        module.exports = factory(require('angular'));
+        module.exports = factory(angular);
     } else if (typeof define === 'function' && define.amd) {
         define(['angular'], factory);
     } else {
         factory(angular);
     }
 }(function (angular) {
-    return angular.module('ngStorage', [])
-        .provider('ngStorageProvider', [function () {
-            var isSupport = window.localStorage;
+    var _provider = function (type) {
+        return function () {
+            var prefix = 'ngStorage';
+
+            this.setPrefix = function (pre) {
+                prefix = pre;
+            };
 
             this.$get = function () {
                 return {
-                    setItem: (function () {
-                        if (isSupport) {
-                            return function (key, value) {
-
-                                window.localStorage.setItem(key, value);
-                            };
-                        } else {
-                            return function (key, value) {
-
-                            };
+                    setItem: function (key, value) {
+                        try {
+                            // 避免在iphone && ipad上偶尔报错，先删除再设置
+                            if (this.getItem(key) !== null) {
+                                this.removeItem(key);
+                            }
+                            window[type].setItem(key, value);
+                        } catch (oException) {
+                            // 超过大小限制，清空缓存
+                            if (oException.name == 'QuotaExceededError') {
+                                window[type].clear();
+                                window[type].setItem(key, value);
+                            }
                         }
-                    })(),
+                    },
 
-                    getItem: (function () {
-                        if (isSupport) {
-                            return function (key) {
-                                return window.localStorage.getItem(key);
-                            };
-                        } else {
-                            return function (key) {
+                    getItem: function (key) {
+                        // 统一返回值，避免JSON.parse报错
+                        var result = window[type].getItem(prefix + '-' + key);
+                        return result ? result : null;
+                    },
 
-                            };
-                        }
-                    })(),
-
-                    removeItem: (function () {
-                        if (isSupport) {
-                            return function (key) {
-                                window.localStorage.removeItem(key);
-                            };
-                        } else {
-                            return function (key) {
-
-                            };
-                        }
-                    })()
+                    removeItem: function (key) {
+                        window[type].removeItem(prefix + '-' + key);
+                    }
                 };
             };
-        }]);
+        };
+    };
+
+    return angular.module('ngStorage', [])
+        .provider('ngLocalStorage', [_provider('localStorage')])
+        .provider('ngSessionStorage', [_provider('sessionStorage')]);
 }));
