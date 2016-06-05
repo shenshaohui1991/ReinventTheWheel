@@ -1,0 +1,17 @@
+{
+  "manifest_version": 2,
+
+  "name": "MyFirstExtension",
+  "version": "1.0",
+  "description": "The first extension that I made.",
+
+  "browser_action": {
+    "default_icon": "dota.png",
+    "default_popup": "popup.html",
+    "default_title": "please click me!"
+  },
+
+  "permissions": [
+    "activeTab"
+  ]
+}
