@@ -25,6 +25,7 @@
 
                     $(".datetime").datetimepicker({
                         format: format,
+                        timepicker: !!scope.needtime,
                         lang: 'zh',
                         yearStart: 2014
                     });
