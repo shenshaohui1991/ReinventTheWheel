@@ -23,6 +23,8 @@
                 return {
                     setItem: function (key, value) {
                         try {
+                            key = prefix + '-' + key;
+
                             // 避免在iphone && ipad上偶尔报错，先删除再设置
                             if (this.getItem(key) !== null) {
                                 this.removeItem(key);
