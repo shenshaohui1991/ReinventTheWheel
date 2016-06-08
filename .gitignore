@@ -48,3 +48,10 @@ Temporary Items
 
 *.xml
 .idea/
+
+**/node_modules/
+
+**/react-15.1.0/
+
+
+
