@@ -13,6 +13,6 @@ var ExampleApplication = React.createClass({
 });
 
 ReactDOM.render(
-    <ExampleApplication elapsed={new Date().getTime() - start} />,
+    <ExampleApplication elapsed={new Date().getTime()}/>,
     document.getElementById('wrapper')
 );

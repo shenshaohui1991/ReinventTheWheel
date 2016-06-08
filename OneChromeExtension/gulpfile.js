@@ -5,9 +5,9 @@ var gulp = require('gulp'),
     rename = require('gulp-rename');
 
 gulp.task('publish', function () {
-    return gulp.src('./js/index.jsx')
-        .pipe(jsx({
-            factory: 'ReactDOM.render'
+    return gulp.src('./js/index.js')
+        .pipe(babel({
+            presets: ['react']
         }))
         .pipe(browserify())
         .pipe(rename('index.js'))
