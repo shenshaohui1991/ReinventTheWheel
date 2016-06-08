@@ -42,9 +42,16 @@
 
                 $suggests.empty().css('display', 'none');
 
-                result.forEach(function (li) {
-                    $suggests.append($('<li data-value="' + li.value + '" data-text="' + li.text + '" >' + li.text + '</li>'));
-                });
+                // 兼容ie8 不使用forEach
+                for (var i = 0, len = result.length; i < len; i++) {
+                    $suggests.append($('<li data-value="' + result[i].value + '" data-text="' + result[i].text + '" >' + result[i].text + '</li>'));
+                }
+
+                /*
+                 result.forEach(function (li) {
+                 $suggests.append($('<li data-value="' + li.value + '" data-text="' + li.text + '" >' + li.text + '</li>'));
+                 });
+                 */
 
                 $suggests.css('display', 'block');
             };

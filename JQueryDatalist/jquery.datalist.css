@@ -1,6 +1,12 @@
 .suggest__wrapper {
     position: relative;
     display: inline-block;
+    vertical-align: middle;
+    /* 为了兼容IE9以下浏览器，块级元素display:inline-block不生效 */
+    *display: inline;
+    *zoom: 1;
+    /* 保证不被置于其他组件之上 */
+    z-index: 99;
 }
 
 .suggest__wrapper ul {
