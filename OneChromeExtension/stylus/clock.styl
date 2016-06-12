@@ -1,0 +1,35 @@
+.clock {
+  overflow: hidden;
+  width: 100%;
+  height: 45px;
+  text-align: center;
+  line-height: 45px;
+  .clock__loop, .clock__switch {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+  .clock__loop {
+    float: left;
+    margin: 7px 0 7px 5px;
+    background-image: url(../img/loop-disabled.png);
+    background-size: 30px 30px;
+  }
+  .clock__loop--disabled {
+    background-image: url(../img/loop.png);
+    background-size: 30px 30px;
+  }
+  .clock__time {
+    color: #eb4f38;
+  }
+  .clock__switch {
+    float: right;
+    margin: 7px 5px 7px 0;
+    background-image: url(../img/start.png);
+    background-size: 30px 30px;
+  }
+  .clock__switch--disabled {
+    background-image: url(../img/stop.png);
+    background-size: 30px 30px;
+  }
+}
