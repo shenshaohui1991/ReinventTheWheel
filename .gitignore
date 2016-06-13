@@ -51,7 +51,6 @@ Temporary Items
 **/node_modules/
 **/react-15.1.0/
 
-OneChromeExtension/dist/
 OneChromeExtension/dist.crx
 OneChromeExtension/dist.pem
 
