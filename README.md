@@ -6,4 +6,5 @@
     + AnuglarDatetimePicker：简单的利用directive封装了JQuery.DatetimePicker
 3. JQuery
     + JQueryDatalist: 利用select和input实现的datalist
+    + Swiper: 图片轮播组件
 
