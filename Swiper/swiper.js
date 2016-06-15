@@ -4,18 +4,17 @@
 (function ($) {
     $.fn.swiper = function () {
         /**
-         * 1. 创建重复的元素，添加类
-         * 2. 设定定时器
-         * 3. 设定动画类
+         * 1. 通过
          * */
         var $container = $(this), // 获得容器
             children = $container.children('.swiper-item'), // 滚动图片
             itemCount = children.length, // 实际元素数
-            curIndex = 1,
+            curIndex = 0, nextIndex = 1, preIndex = itemCount - 1, willShowIndex = 2, // 待展示元素
             defaultOptions = {
-                speed: 3000
+                speed: 3000,
+                animateSpeed: 300
             },
-            $firstChild, $lastChild, intervalId, runSwiperItem;
+            intervalId, runSwiperItem, setAnimate, setCss;
 
         if (itemCount == 0) {
             // no children
@@ -23,45 +22,119 @@
         }
 
         for (var i = 0, len = itemCount; i < len; i++) {
-            //$(children[i]).data('swiperIndex', i + 1);
             $(children[i]).attr('data-swiper-index', i);
         }
 
-        // 为无限滚动添加重复元素
-        $firstChild = $(children[0]).clone().addClass('swiper-dupItem').attr('data-dup', '1');
-        $lastChild = $(children[children.length - 1]).clone().addClass('swiper-dupItem').attr('data-dup', '1');
-        $container.prepend($lastChild);
-        $container.append($firstChild);
+        setAnimate = function ($dom, type) {
+            switch (type) {
+                case 'bePre':
+                    $dom.animate({
+                        left: 0,
+                        marginLeft: 0,
+                        height: '95%',
+                        opacity: 1
+                    }, defaultOptions.animatedSpeed, function () {
+                        $dom.removeClass('swiper-curItem')
+                            .addClass('swiper-preItem')
+                            .css({
+                                zIndex: 10
+                            });
+                    });
+                    break;
+                case 'beCur':
+                    $dom.css({
+                        zIndex: 30
+                    }).animate({
+                        left: '50%',
+                        marginLeft: -250,
+                        height: '100%',
+                        opacity: 1
+                    }, defaultOptions.animatedSpeed, function () {
+                        $dom.removeClass('swiper-nextItem')
+                            .addClass('swiper-curItem');
+                    });
+                    break;
+                case 'beNext':
+                    $dom.animate({
+                        right: 0,
+                        marginLeft: 0,
+                        height: '95%',
+                        opacity: 1
+                    }, defaultOptions.animatedSpeed, function () {
+                        $dom.addClass('swiper-nextItem')
+                            .css({
+                                zIndex: 10
+                            });
+                    });
+                    break;
+                case 'fade':
+                    $dom.animate({
+                        left: '50%',
+                        marginLeft: -250,
+                        height: '100%',
+                        opacity: 0
+                    }, defaultOptions.animatedSpeed, function () {
+                        $dom.removeClass('swiper-preItem')
+                            .css({
+                                zIndex: 1
+                            });
+                    });
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        setCss = function ($dom, type) {
+            switch (type) {
+                case 'pre':
+                    $dom.css({
+                        left: 0,
+                        marginLeft: 0,
+                        height: '95%',
+                        opacity: 1,
+                        zIndex: 10
+                    });
+                    break;
+                case 'cur':
+                    $dom.css({
+                        left: '50%',
+                        marginLeft: -250,
+                        height: '100%',
+                        opacity: 1,
+                        zIndex: 30
+                    });
+                    break;
+                case 'next':
+                    $dom.css({
+                        right: 0,
+                        marginLeft: 0,
+                        height: '95%',
+                        opacity: 1,
+                        zindex: 10
+                    });
+                    break;
+                default:
+                    break;
+            }
+        };
 
         // 初始化位置类
-        $($container.children()[0]).addClass('swiper-preItem');
-        $($container.children()[1]).addClass('swiper-curItem');
-        $($container.children()[2]).addClass('swiper-nextItem');
+        setCss($($container.children()[preIndex]).addClass('swiper-preItem'), 'pre');
+        setCss($($container.children()[curIndex]).addClass('swiper-curItem'), 'cur');
+        setCss($($container.children()[nextIndex]).addClass('swiper-nextItem'), 'next');
 
         // 动画函数
         runSwiperItem = function () {
-            var preClass, curClass, nextClass;
+            setAnimate($('.swiper-item[data-swiper-index=' + preIndex + ']'), 'fade');
+            setAnimate($('.swiper-item[data-swiper-index=' + curIndex + ']'), 'bePre');
+            setAnimate($('.swiper-item[data-swiper-index=' + nextIndex + ']'), 'beCur');
+            setAnimate($('.swiper-item[data-swiper-index=' + willShowIndex + ']'), 'beNext');
 
-            if (curIndex == 0) {
-                preClass = '.swiper-item.swiper-dupItem[data-swiper-index=' + (itemCount - 1) + ']';
-                curClass = '.swiper-item[data-swiper-index=' + curIndex + ']';
-                nextClass = '.swiper-item[data-swiper-index=' + (curIndex + 1) + ']';
-            } else if (curIndex == itemCount - 1) {
-                preClass = '.swiper-item[data-swiper-index=' + (curIndex - 1) + ']';
-                curClass = '.swiper-item[data-swiper-index=' + curIndex + ']';
-                nextClass = '.swiper-item.swiper-dupItem[data-swiper-index=0]';
-            } else {
-                preClass = '.swiper-item[data-swiper-index=' + (curIndex - 1) + ']';
-                curClass = '.swiper-item[data-swiper-index=' + curIndex + ']';
-                nextClass = '.swiper-item[data-swiper-index=' + (curIndex + 1) + ']';
-            }
-
+            preIndex = curIndex;
+            nextIndex = (curIndex + 2) % itemCount;
+            willShowIndex = (curIndex + 3) % itemCount;
             curIndex = (curIndex + 1) % itemCount;
-
-            $('.swiper-item').removeClass('swiper-preItem').removeClass('swiper-curItem').removeClass('swiper-nextItem');
-            $(preClass).addClass('swiper-preItem');
-            $(curClass).addClass('swiper-curItem');
-            $(nextClass).addClass('swiper-nextItem');
         };
 
         // 定时器

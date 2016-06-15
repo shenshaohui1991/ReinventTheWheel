@@ -17,17 +17,11 @@
         .swiper-item {
             position: absolute;
             left: 50%;
+            bottom: 0;
             width: 500px;
             height: 100%;
             margin-left: -250px;
-        }
-
-        .swiper-preItem {
-            left: 0;
-            bottom: 0;
-            height: 95%;
-            margin-left: 0;
-            z-index: 10;
+            opacity: 0;
         }
 
         .swiper-nextItem:before,
@@ -39,17 +33,6 @@
             background-color: rgba(0, 0, 0, .5);
         }
 
-        .swiper-curItem {
-            z-index: 30;
-        }
-
-        .swiper-nextItem {
-            right: 0;
-            bottom: 0;
-            height: 95%;
-            margin-left: 0;
-            z-index: 10;
-        }
 
         /* 自定义样式 */
         .item {
