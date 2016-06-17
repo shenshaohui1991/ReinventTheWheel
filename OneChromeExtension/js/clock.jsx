@@ -2,16 +2,17 @@
  * Created by Tea on 2016/6/11.
  */
 var React = require('react');
+var TomatoActions = require('./TomatoActions');
 
 require('../stylus/clock.styl');
 
 module.exports = React.createClass({
     handleLoop: function () {
-        this.props.handleLoop();
+        TomatoActions.handleLoop();
     },
 
     handleSwitch: function () {
-        this.props.handleSwitch();
+        TomatoActions.handleSwitch();
     },
 
     render: function () {

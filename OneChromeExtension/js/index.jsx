@@ -1,45 +1,26 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+var Reflux = require('reflux');
 var Clock = require('./clock.jsx');
+var TomatoStores = require('./TomatoStores');
 
 require('../stylus/index.styl');
 
 var Container = React.createClass({
+    // auto unmount listener
+    mixins: [Reflux.ListenerMixin],
+
     getInitialState: function () {
-        return {
-            timer: null,
-            time: 25 * 60 * 1000
-        };
+        return TomatoStores.getState();
     },
 
-    handleClockSwitch: function () {
-        if (this.state.timer) {
-            clearInterval(this.state.timer);
-            this.setState({
-                timer: null
-            });
-        } else {
-            var timer = setInterval((function () {
-                if (this.state.time < 1000) {
-                    clearInterval(this.state.timer);
-                    this.setState({
-                        timer: null,
-                        time: 25 * 60 * 1000
-                    });
-                } else {
-                    this.setState({
-                        time: this.state.time - 1000
-                    });
-                }
-            }).bind(this), 1000);
-            this.setState({
-                timer: timer
-            });
-        }
+    onStateChange: function () {
+        console.log('onStateChange', arguments);
+        this.setState(TomatoStores.getState());
     },
 
-    handleClockLoop: function () {
-        console.log('click loop');
+    componentDidMount: function () {
+        this.unsubscribe = TomatoStores.listen(this.onStateChange);
     },
 
     render: function () {
@@ -47,8 +28,7 @@ var Container = React.createClass({
             result = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ":" +
                 (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds());
 
-        return <Clock handleSwitch={this.handleClockSwitch}
-                      handleLoop={this.handleClockLoop} time={result}/>
+        return <Clock time={result}/>
     }
 });
 
