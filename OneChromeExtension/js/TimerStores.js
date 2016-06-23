@@ -30,6 +30,9 @@ var TimerStores = Reflux.createStore({
             this.trigger(state);
         } else {
             state.timer = setInterval(this.startWorkTimer, 1000);
+            state.switch = true;
+
+            this.trigger(state);
         }
     },
 

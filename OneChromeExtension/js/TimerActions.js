@@ -7,4 +7,12 @@ var TimerActions = Reflux.createActions([
     'handleLoop'
 ]);
 
+TimerActions.handleSwitch.preEmit = function () {
+    console.log('click switch');
+};
+
+TimerActions.handleLoop.preEmit = function () {
+    console.log('click loop');
+};
+
 module.exports = TimerActions;
