@@ -4,6 +4,7 @@
 2. AngularJS
     + ngStorage: 为Angular封装了localStorage
     + AnuglarDatetimePicker：简单的利用directive封装了JQuery.DatetimePicker
+    + AngularContentEditable: 解决angular中contenteditable导致ng-model失效
 3. JQuery
     + JQueryDatalist: 利用select和input实现的datalist
     + Swiper: 图片轮播组件

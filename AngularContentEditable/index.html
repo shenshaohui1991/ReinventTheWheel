@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <style>
+        .editable-content {
+
+        }
+    </style>
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <div class="editable-content" contenteditable ng-model="htmlContent">
+
+    </div>
+
+    <textara>
+        {{htmlContent}}
+    </textara>
+</div>
+<script src="./js/angular.min.js"></script>
+<script src="./js/app.js"></script>
+</body>
+</html>
