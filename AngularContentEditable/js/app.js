@@ -5,7 +5,10 @@
 (function () {
     angular.module('myApp', [])
         .controller('myCtrl', ['$scope', function ($scope) {
-            $scope.htmlContent = '巴拉巴拉<span style="color: red;">hello world</span>巴拉巴拉';
+            $scope.data = {
+                htmlContent: '巴拉巴拉<span style="color: red;">hello world</span>巴拉巴拉',
+                words: 0
+            };
         }])
         .directive('contenteditable', [function () {
             return {
@@ -60,10 +63,10 @@
                     calcWords();
 
                     function calcWords() {
-                        if (scope.words && element && element[0] && !element.hasClass('hasPlaceholder')) {
+                        if (attrs.words && element && element[0] && !element.hasClass('hasPlaceholder')) {
                             var result = element[0].innerText.match(/\S/g);
                             scope.words = result ? result.length : 0;
-                        } else if (scope.words && element.hasClass('hasPlaceholder')) {
+                        } else if (attrs.words && element.hasClass('hasPlaceholder')) {
                             scope.words = 0;
                         }
                     }

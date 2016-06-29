@@ -11,15 +11,15 @@
 </head>
 <body>
 <div ng-controller="myCtrl">
-    <div class="editable-content" contenteditable ng-model="htmlContent">
-
-    </div>
-
+    <div class="editable-content" contenteditable ng-model="data.htmlContent" words="data.words" placeholder="hahahah"></div>
     <textara>
-        {{htmlContent}}
+        {{data.htmlContent}}
     </textara>
+    <div>
+        {{data.words}}
+    </div>
 </div>
-<script src="./js/angular.min.js"></script>
+<script src="./js/angular.js"></script>
 <script src="./js/app.js"></script>
 </body>
 </html>
