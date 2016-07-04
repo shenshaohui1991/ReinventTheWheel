@@ -3,18 +3,56 @@
  */
 (function ($) {
     $.fn.swiper = function () {
-        /**
-         * 1. 通过
-         * */
         var $container = $(this), // 获得容器
             children = $container.children('.swiper-item'), // 滚动图片
             itemCount = children.length, // 实际元素数
-            curIndex = 0, nextIndex = 1, preIndex = itemCount - 1, willShowIndex = 2, // 待展示元素
+            curIndex = 0,
+            nextIndex = 1,
+            preIndex = itemCount - 1,
+            willShowIndex = 2, // 待展示元素
             defaultOptions = {
                 speed: 3000,
                 animateSpeed: 300
             },
-            intervalId, runSwiperItem, setAnimate, setCss;
+            bePreAnimate = {
+                left: '-30%',
+                height: '80%',
+                opacity: 1
+            },
+            beNextAnimate = {
+                left: '30%',
+                height: '80%',
+                opacity: 1
+            },
+            beCurAnimate = {
+                left: '0',
+                right: 0,
+                height: '100%',
+                opacity: 1
+            },
+            beFadeAnimate = {
+                left: '0',
+                right: 0,
+                height: '100%',
+                opacity: 0
+            },
+            beNextCss = {
+                left: '30%',
+                height: '80%',
+                opacity: 1
+            },
+            beCurCss = {
+                left: 0,
+                height: '100%',
+                opacity: 1
+            },
+            bePreCss = {
+                left: '-30%',
+                height: '80%',
+                opacity: 1
+            },
+            $dots = $('<ul class="swiper-dots"></ul>'),
+            $dot, intervalId, runSwiperItem, setAnimate, setCss, setActiveDot;
 
         if (itemCount == 0) {
             // no children
@@ -23,61 +61,37 @@
 
         for (var i = 0, len = itemCount; i < len; i++) {
             $(children[i]).attr('data-swiper-index', i);
+            if (i == 0) {
+                $dots.append($('<li class="active" data-index="' + i + '"></li>'));
+            } else {
+                $dots.append($('<li data-index="' + i + '"></li>'));
+            }
         }
+        $container.append($dots);
+        $dot = $dots.children('li');
 
         setAnimate = function ($dom, type) {
             switch (type) {
                 case 'bePre':
-                    $dom.animate({
-                        left: 0,
-                        marginLeft: 0,
-                        height: '95%',
-                        opacity: 1
-                    }, defaultOptions.animatedSpeed, function () {
+                    $dom.animate(bePreAnimate, defaultOptions.animateSpeed, function () {
                         $dom.removeClass('swiper-curItem')
-                            .addClass('swiper-preItem')
-                            .css({
-                                zIndex: 10
-                            });
+                            .addClass('swiper-preItem');
                     });
                     break;
                 case 'beCur':
-                    $dom.css({
-                        zIndex: 30
-                    }).animate({
-                        left: '50%',
-                        marginLeft: -250,
-                        height: '100%',
-                        opacity: 1
-                    }, defaultOptions.animatedSpeed, function () {
+                    $dom.animate(beCurAnimate, defaultOptions.animateSpeed, function () {
                         $dom.removeClass('swiper-nextItem')
                             .addClass('swiper-curItem');
                     });
                     break;
                 case 'beNext':
-                    $dom.animate({
-                        right: 0,
-                        marginLeft: 0,
-                        height: '95%',
-                        opacity: 1
-                    }, defaultOptions.animatedSpeed, function () {
-                        $dom.addClass('swiper-nextItem')
-                            .css({
-                                zIndex: 10
-                            });
+                    $dom.animate(beNextAnimate, defaultOptions.animateSpeed, function () {
+                        $dom.addClass('swiper-nextItem');
                     });
                     break;
                 case 'fade':
-                    $dom.animate({
-                        left: '50%',
-                        marginLeft: -250,
-                        height: '100%',
-                        opacity: 0
-                    }, defaultOptions.animatedSpeed, function () {
-                        $dom.removeClass('swiper-preItem')
-                            .css({
-                                zIndex: 1
-                            });
+                    $dom.animate(beFadeAnimate, defaultOptions.animateSpeed, function () {
+                        $dom.removeClass('swiper-preItem');
                     });
                     break;
                 default:
@@ -88,35 +102,22 @@
         setCss = function ($dom, type) {
             switch (type) {
                 case 'pre':
-                    $dom.css({
-                        left: 0,
-                        marginLeft: 0,
-                        height: '95%',
-                        opacity: 1,
-                        zIndex: 10
-                    });
+                    $dom.css(bePreCss);
                     break;
                 case 'cur':
-                    $dom.css({
-                        left: '50%',
-                        marginLeft: -250,
-                        height: '100%',
-                        opacity: 1,
-                        zIndex: 30
-                    });
+                    $dom.css(beCurCss);
                     break;
                 case 'next':
-                    $dom.css({
-                        right: 0,
-                        marginLeft: 0,
-                        height: '95%',
-                        opacity: 1,
-                        zindex: 10
-                    });
+                    $dom.css(beNextCss);
                     break;
                 default:
                     break;
             }
+        };
+
+        setActiveDot = function (index) {
+            $dot.removeClass('active');
+            $dot.filter('[data-index="' + index + '"]').addClass('active');
         };
 
         // 初始化位置类
@@ -135,6 +136,8 @@
             nextIndex = (curIndex + 2) % itemCount;
             willShowIndex = (curIndex + 3) % itemCount;
             curIndex = (curIndex + 1) % itemCount;
+
+            setActiveDot(curIndex);
         };
 
         // 定时器
