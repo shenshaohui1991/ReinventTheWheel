@@ -10,7 +10,7 @@
         .directive('area', [function () {
             return {
                 restrict: 'E',
-                templateUrl: './html/area.html',
+                templateUrl: '../html/author/userInfo/area.html',
                 scope: {
                     location: '='
                 },
@@ -55,11 +55,9 @@
                     scope.resetCity = resetCity;
                     scope.createLocation = createLocation;
 
-                    initCityAndProvince();
-
-                    function initCityAndProvince() {
+                    scope.$watch('location', function () {
                         setLocation.apply(null, (scope.location || '').split(' '));
-                    }
+                    });
 
                     function setLocation(province, city) {
                         var areaInfo = scope.areaInfo;
@@ -67,7 +65,7 @@
                         if (!province || !areaInfo[province]) { // 省份不存在
                             scope.province = '北京';
                             scope.city = scope.areaInfo[scope.province][0];
-                        } else if (!city || !areaInfo[province][city]) { // 城市不存在
+                        } else if (!city || !getCity(province, city)) { // 城市不存在
                             scope.province = province;
                             scope.city = scope.areaInfo[scope.province][0];
                         } else {
@@ -76,6 +74,18 @@
                         }
 
                         createLocation();
+                    }
+
+                    function getCity(province, city) {
+                        var cities = scope.areaInfo[province];
+
+                        for (var i = 0, len = cities.length; i < len; ++i) {
+                            if (cities[i] == city) {
+                                return true;
+                            }
+                        }
+
+                        return false;
                     }
 
                     function resetCity() {
