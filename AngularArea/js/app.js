@@ -6,13 +6,15 @@
     angular.module('myApp', [])
         .controller('myCtrl', ['$scope', function ($scope) {
             $scope.areaInfo = '河北 河北';
+            $scope.provinceInfo = '天津';
         }])
         .directive('area', [function () {
             return {
                 restrict: 'E',
-                templateUrl: '../html/author/userInfo/area.html',
+                templateUrl: '../html/author/common/area.html',
                 scope: {
-                    location: '='
+                    location: '=',
+                    hidecity: '@'
                 },
                 link: function (scope, element, attrs) {
                     scope.areaInfo = {
@@ -52,8 +54,15 @@
                     };
                     scope.province = '北京';
                     scope.city = scope.areaInfo[scope.province][0];
+                    scope.provinceStyle = {width: '48%', display: 'inline-block', 'margin-right': '4%'};
+                    scope.cityStyle = {width: '48%', display: 'inline-block'};
                     scope.resetCity = resetCity;
                     scope.createLocation = createLocation;
+
+                    if (scope.hidecity) {
+                        // 使用原有样式
+                        scope.provinceStyle = null;
+                    }
 
                     scope.$watch('location', function () {
                         setLocation.apply(null, (scope.location || '').split(' '));
@@ -62,10 +71,21 @@
                     function setLocation(province, city) {
                         var areaInfo = scope.areaInfo;
 
-                        if (!province || !areaInfo[province]) { // 省份不存在
+                        // 只需要展示省份
+                        if (scope.hidecity) {
+                            if (!province || (province && !areaInfo[province])) {
+                                scope.province = '北京';
+                            } else {
+                                scope.province = province;
+                            }
+
+                            return;
+                        }
+
+                        if (!province || (province && !areaInfo[province])) { // 省份不存在
                             scope.province = '北京';
                             scope.city = scope.areaInfo[scope.province][0];
-                        } else if (!city || !getCity(province, city)) { // 城市不存在
+                        } else if (!city || (city && !getCity(province, city))) { // 城市不存在
                             scope.province = province;
                             scope.city = scope.areaInfo[scope.province][0];
                         } else {
@@ -94,7 +114,7 @@
                     }
 
                     function createLocation() {
-                        scope.location = scope.province + ' ' + scope.city;
+                        scope.location = scope.hidecity ? scope.province : scope.province + ' ' + scope.city;
                     }
                 }
             };
