@@ -78,7 +78,7 @@
                             } else {
                                 scope.province = province;
                             }
-
+                            createLocation();
                             return;
                         }
 
