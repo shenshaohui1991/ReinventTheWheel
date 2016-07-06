@@ -1,6 +1,6 @@
 <select class="form-control" ng-style="provinceStyle" ng-model="province" ng-change="resetCity()">
     <option ng-repeat="(provinceInfo, cities) in areaInfo" ng-value="provinceInfo">{{provinceInfo}}</option>
 </select>
-<select ng-if="!hidecity" ng-style="cityStyle" class="form-control" ng-model="city" ng-change="createLocation()">
+<select ng-show="!hidecity" ng-style="cityStyle" class="form-control" ng-model="city" ng-change="createLocation()">
     <option ng-repeat="cityInfo in areaInfo[province]" ng-value="cityInfo">{{cityInfo}}</option>
 </select>
