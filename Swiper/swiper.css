@@ -56,3 +56,22 @@
 .swiper-dots li.active {
     background: red;
 }
+
+.swiper-btn {
+    position: absolute;
+    top: 50%;
+    height: 50px;
+    width: 50px;
+    margin-top: -25px;
+    z-index: 30;
+    background: black;
+}
+
+.goPrev-btn {
+    left: -30%;
+}
+
+.goNext-btn {
+    left: 130%;
+    margin-left: -50px;
+}
