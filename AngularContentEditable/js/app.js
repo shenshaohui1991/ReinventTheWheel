@@ -56,6 +56,15 @@
                         updateViewValue();
                     });
 
+
+                    // TODO: 处理回车 && 复制粘贴
+                    element.on('keydown', function (e) {
+                        if (e.which == 13) {
+                            //e.preventDefault();
+
+                        }
+                    });
+
                     element.on('keyup cut paste change', function () {
                         updateViewValue();
                     });
