@@ -98,6 +98,40 @@
             swiperGoNext();
         });
 
+        // 添加进度条点击
+        $dot.on('mouseenter', function () {
+            var index = $(this).data('index'),
+                diff = index - curIndex,
+                positive = diff > 0,
+                len, moveFn;
+
+            clearInterval(intervalId);
+            intervalId = null;
+
+            if (diff == 0) {
+                return;
+            }
+
+            if (Math.abs(diff) > Math.ceil(itemCount / 2)) {
+                len = itemCount - Math.abs(diff);
+                moveFn = positive ? swiperGoPrev : swiperGoNext;
+            } else {
+                len = Math.abs(diff);
+                moveFn = positive ? swiperGoNext : swiperGoPrev;
+            }
+
+            for (var i = 0; i < len; i++) {
+                moveFn();
+            }
+
+        });
+
+        $dot.on('mouseleave', function () {
+            if (!intervalId) {
+                intervalId = setInterval(swiperGoNext, defaultOptions.speed);
+            }
+        });
+
         setAnimate = function ($dom, type) {
             switch (type) {
                 case 'bePre':
