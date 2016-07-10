@@ -12,25 +12,28 @@
             hasFadeIndex = itemCount - 2, // 已经消失的元素
             willShowIndex = 2, // 待展示元素
             defaultOptions = {
-                speed: 5000,
-                animateSpeed: 200
+                speed: 3000,
+                animateSpeed: 300
             },
             bePreAnimate, backPreAnimate, beNextAnimate, backNextAnimate,
             beCurAnimate, backCurAnimate, beFadeAnimate, backHideAnimate,
             beNextCss = {
                 left: '30%',
+                top: '10%',
                 height: '80%',
                 opacity: 1,
                 zIndex: 10
             },
             beCurCss = {
                 left: 0,
+                top: 0,
                 height: '100%',
                 opacity: 1,
                 zIndex: 30
             },
             bePreCss = {
                 left: '-30%',
+                top: '10%',
                 height: '80%',
                 opacity: 1,
                 zIndex: 10
@@ -40,24 +43,28 @@
 
         bePreAnimate = backPreAnimate = {
             left: '-30%',
+            top: '10%',
             height: '80%',
             opacity: 1,
             zIndex: 10
         };
         beNextAnimate = backNextAnimate = {
             left: '30%',
+            top: '10%',
             height: '80%',
             opacity: 1,
             zIndex: 10
         };
         beCurAnimate = backCurAnimate = {
-            left: '0',
+            left: 0,
+            top: 0,
             right: 0,
             height: '100%',
             opacity: 1
         };
         beFadeAnimate = backHideAnimate = {
-            left: '0',
+            left: 0,
+            top: 0,
             right: 0,
             height: '100%',
             opacity: 0,
@@ -105,8 +112,12 @@
                 positive = diff > 0,
                 len, moveFn;
 
-            clearInterval(intervalId);
-            intervalId = null;
+            if (intervalId) {
+                console.log('clear interval', intervalId);
+
+                clearInterval(intervalId);
+                intervalId = null;
+            }
 
             if (diff == 0) {
                 return;
@@ -129,13 +140,19 @@
         $dot.on('mouseleave', function () {
             if (!intervalId) {
                 intervalId = setInterval(swiperGoNext, defaultOptions.speed);
+
+                console.log('set interval', intervalId);
             }
         });
 
         setAnimate = function ($dom, type) {
             switch (type) {
                 case 'bePre':
-                    $dom.animate(bePreAnimate, defaultOptions.animateSpeed, function () {
+                    $dom
+                        .css({
+                            transform: 'rotateY(10deg)'
+                        })
+                        .animate(bePreAnimate, defaultOptions.animateSpeed, function () {
                         $dom.removeClass('swiper-curItem')
                             .addClass('swiper-preItem');
                     });
@@ -143,24 +160,35 @@
                 case 'beCur':
                     $dom
                         .css({
-                            'z-index': 50
+                            'z-index': 50,
+                            transform: 'rotateY(0)'
                         })
                         .removeClass('swiper-nextItem')
                         .animate(beCurAnimate, defaultOptions.animateSpeed, function () {
                             $dom
-                                .css({'z-index': 30})
+                                .css({
+                                    'z-index': 30
+                                })
                                 .addClass('swiper-curItem');
                         });
                     break;
                 case 'beNext':
-                    $dom.animate(beNextAnimate, defaultOptions.animateSpeed, function () {
+                    $dom
+                        .css({
+                            transform: 'rotateY(-10deg)'
+                        })
+                        .animate(beNextAnimate, defaultOptions.animateSpeed, function () {
                         $dom
                             .addClass('swiper-nextItem');
                     });
                     break;
                 case 'fade':
                     $dom.animate(beFadeAnimate, defaultOptions.animateSpeed, function () {
-                        $dom.removeClass('swiper-preItem');
+                        $dom
+                            .removeClass('swiper-preItem')
+                            .css({
+                                transform: 'rotateY(0)'
+                            });
                     });
                     break;
                 case 'backPre':
