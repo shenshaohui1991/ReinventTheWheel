@@ -17,16 +17,15 @@
 }
 
 .swiper-curItem {
-    transition: transform .3s linear;
-    z-index: 30;
+    transition: transform .15s linear;
 }
 
 .swiper-nextItem,
 .swiper-preItem {
-    transition: transform 3s linear;
-    z-index: 10;
+    transition: transform .15s linear;
 }
 
+.swiper-item:before,
 .swiper-nextItem:before,
 .swiper-preItem:before {
     content: '';
@@ -34,6 +33,10 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, .5);
+}
+
+.swiper-curItem.swiper-item:before {
+    display: none;
 }
 
 .swiper-dots {
@@ -52,11 +55,14 @@
     float: left;
     margin: 0 3px;
     background: white;
-    width: 20px;
-    height: 2px;
+    width: 13px;
+    height: 8px;
+    border-radius: 4px;
+    transition: width .15s;
 }
 
 .swiper-dots li.active {
+    width: 24px;
     background: red;
 }
 

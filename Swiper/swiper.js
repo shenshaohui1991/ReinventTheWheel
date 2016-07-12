@@ -13,7 +13,7 @@
             willShowIndex = 2, // 待展示元素
             defaultOptions = {
                 speed: 3000,
-                animateSpeed: 300
+                animateSpeed: 200
             },
             bePreAnimate, backPreAnimate, beNextAnimate, backNextAnimate,
             beCurAnimate, backCurAnimate, beFadeAnimate, backHideAnimate,
@@ -21,6 +21,7 @@
                 left: '30%',
                 top: '10%',
                 height: '80%',
+                transform: 'rotateY(-10deg)',
                 opacity: 1,
                 zIndex: 10
             },
@@ -28,6 +29,7 @@
                 left: 0,
                 top: 0,
                 height: '100%',
+                transform: 'rotateY(0)',
                 opacity: 1,
                 zIndex: 30
             },
@@ -35,6 +37,7 @@
                 left: '-30%',
                 top: '10%',
                 height: '80%',
+                transform: 'rotateY(10deg)',
                 opacity: 1,
                 zIndex: 10
             },
@@ -113,8 +116,6 @@
                 len, moveFn;
 
             if (intervalId) {
-                console.log('clear interval', intervalId);
-
                 clearInterval(intervalId);
                 intervalId = null;
             }
@@ -152,10 +153,9 @@
                         .css({
                             transform: 'rotateY(10deg)'
                         })
-                        .animate(bePreAnimate, defaultOptions.animateSpeed, function () {
-                        $dom.removeClass('swiper-curItem')
-                            .addClass('swiper-preItem');
-                    });
+                        .animate(bePreAnimate, defaultOptions.animateSpeed)
+                        .removeClass('swiper-curItem')
+                        .addClass('swiper-preItem');
                     break;
                 case 'beCur':
                     $dom
@@ -164,12 +164,12 @@
                             transform: 'rotateY(0)'
                         })
                         .removeClass('swiper-nextItem')
+                        .addClass('swiper-curItem')
                         .animate(beCurAnimate, defaultOptions.animateSpeed, function () {
                             $dom
                                 .css({
                                     'z-index': 30
-                                })
-                                .addClass('swiper-curItem');
+                                });
                         });
                     break;
                 case 'beNext':
@@ -177,48 +177,56 @@
                         .css({
                             transform: 'rotateY(-10deg)'
                         })
-                        .animate(beNextAnimate, defaultOptions.animateSpeed, function () {
-                        $dom
-                            .addClass('swiper-nextItem');
-                    });
+                        .addClass('swiper-nextItem')
+                        .animate(beNextAnimate, defaultOptions.animateSpeed);
                     break;
                 case 'fade':
-                    $dom.animate(beFadeAnimate, defaultOptions.animateSpeed, function () {
-                        $dom
-                            .removeClass('swiper-preItem')
-                            .css({
-                                transform: 'rotateY(0)'
-                            });
-                    });
+                    $dom
+                        .removeClass('swiper-preItem')
+                        .animate(beFadeAnimate, defaultOptions.animateSpeed, function () {
+                            $dom
+                                .css({
+                                    transform: 'rotateY(0)'
+                                });
+                        });
                     break;
                 case 'backPre':
-                    $dom.animate(backPreAnimate, defaultOptions.animateSpeed, function () {
-                        $dom.addClass('swiper-preItem');
-                    });
+                    $dom
+                        .css({
+                            transform: 'rotateY(10deg)'
+                        })
+                        .animate(backPreAnimate, defaultOptions.animateSpeed)
+                        .addClass('swiper-preItem');
                     break;
                 case 'backCur':
                     $dom
                         .css({
-                            'z-index': 50
+                            'z-index': 50,
+                            transform: 'rotateY(0)'
                         })
                         .removeClass('swiper-preItem')
                         .animate(backCurAnimate, defaultOptions.animateSpeed, function () {
                             $dom
-                                .css({'z-index': 30})
-                                .addClass('swiper-curItem');
-                        });
+                                .css({'z-index': 30});
+                        })
+                        .addClass('swiper-curItem');
                     break;
                 case 'backNext':
-                    $dom.animate(backNextAnimate, defaultOptions.animateSpeed, function () {
-                        $dom
-                            .removeClass('swiper-curItem')
-                            .addClass('swiper-nextItem');
-                    });
+                    $dom
+                        .css({
+                            transform: 'rotateY(-10deg)'
+                        })
+                        .animate(backNextAnimate, defaultOptions.animateSpeed)
+                        .removeClass('swiper-curItem')
+                        .addClass('swiper-nextItem');
                     break;
                 case 'backHide':
-                    $dom.animate(backHideAnimate, defaultOptions.animateSpeed, function () {
-                        $dom.removeClass('swiper-nextItem');
-                    });
+                    $dom
+                        .css({
+                            transform: 'rotateY(0)'
+                        })
+                        .animate(backHideAnimate, defaultOptions.animateSpeed)
+                        .removeClass('swiper-nextItem');
                     break;
                 default:
                     break;
