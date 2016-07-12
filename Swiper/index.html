@@ -4,54 +4,22 @@
     <meta charset="UTF-8">
     <title>swiper demo</title>
     <link rel="stylesheet" href="./swiper.css">
-    <style>
-        /* 自定义样式 */
-        .item {
-            color: black;
-            background-size: 100% 100%;
-            font-size: 20px;
-            text-align: center;
-        }
-
-        .item1 {
-            background: navy;
-            /*background-image: url(1.jpg);*/
-        }
-
-        .item2 {
-            background: orange;
-            /*background-image: url(2.jpg);*/
-        }
-
-        .item3 {
-            background: greenyellow;
-            /*background-image: url(3.jpg);*/
-        }
-
-        .item4 {
-            background: deepskyblue;
-            /*background-image: url(4.jpg);*/
-        }
-
-        .item5 {
-            background: palevioletred;
-            /*background-image: url(5.jpg);*/
-        }
-    </style>
 </head>
 <body>
-<div class="swiper-container">
-    <div class="swiper-item item item1">item 1</div>
-    <div class="swiper-item item item2">item 2</div>
-    <div class="swiper-item item item3">item 3</div>
-    <div class="swiper-item item item4">item 4</div>
+
+<div class="swiper-wrapper">
+    <div class="swiper-container container">
+        <div class="swiper-item"><img src="http://p3.qhimg.com/d/inn/98d1357e/swiper-1.png"></div>
+        <div class="swiper-item"><img src="http://p7.qhimg.com/d/inn/7300981b/swiper-2.png"></div>
+        <div class="swiper-item"><img src="http://p3.qhimg.com/d/inn/106e63e9/swiper-3.png"></div>
+        <div class="swiper-item"><img src="http://p1.qhimg.com/d/inn/32625adb/swiper-4.png"></div>
+    </div>
 </div>
+
 <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 <script src="./swiper.js"></script>
 <script>
-    $('.swiper-container').swiper({
-        speed: 300
-    });
+    $('.swiper-container').swiper();
 </script>
 </body>
 </html>

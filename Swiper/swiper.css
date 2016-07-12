@@ -1,9 +1,21 @@
+.swiper-wrapper {
+    padding: 25px 0 45px;
+    margin-bottom: 35px;
+    background: #f6f6f6;
+    border-radius: 0 0 100% 100%;
+}
+
 .swiper-container {
     position: relative;
-    width: 800px;
-    height: 400px;
+    width: 725px;
+    height: 301px;
     margin: 0 auto;
+    -webkit-perspective: 1200px;
+    -moz-perspective: 1200px;
     perspective: 1200px;
+    -webkit-transform-style: flat;
+    -moz-transform-style: flat;
+    transform-style: flat;
 }
 
 .swiper-item {
@@ -12,33 +24,61 @@
     bottom: 0;
     width: 100%;
     height: 100%;
+    box-shadow: 0 6px 10px #999;
+    border-radius: 8px;
     opacity: 0;
+    z-index: 1;
+    transition: transform .3s;
+}
+
+.swiper-item img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.swiper-item:before {
+    position: absolute;
+    display: block;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, .3);
     z-index: 1;
 }
 
 .swiper-curItem {
-    transition: transform .15s linear;
+    -webkit-transfrom: rotateY(0deg) translateZ(44px);
+    -moz-transfrom: rotateY(0deg) translateZ(44px);
+    transform: rotateY(0deg) translateZ(44px);
+    z-index: 30;
 }
 
-.swiper-nextItem,
 .swiper-preItem {
-    transition: transform .15s linear;
+    -webkit-transfrom: rotateY(30deg);
+    -moz-transfrom: rotateY(30deg);
+    transform: rotateY(30deg);
+    z-index: 10;
 }
 
-.swiper-item:before,
-.swiper-nextItem:before,
-.swiper-preItem:before {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, .5);
+.swiper-nextItem {
+    -webkit-transfrom: rotateY(-30deg);
+    -moz-transfrom: rotateY(-30deg);
+    transform: rotateY(-30deg);
+    z-index: 10;
 }
 
 .swiper-curItem.swiper-item:before {
     display: none;
 }
 
+/* 进度条 */
 .swiper-dots {
     overflow: hidden;
     position: absolute;
@@ -46,8 +86,8 @@
     bottom: 0;
     margin: 6px auto;
     z-index: 50;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%) translateZ(46px);
+    transform: translateX(-50%) translateZ(46px);
     list-style: none;
 }
 
@@ -58,7 +98,7 @@
     width: 13px;
     height: 8px;
     border-radius: 4px;
-    transition: width .15s;
+    transition: width .3s;
 }
 
 .swiper-dots li.active {
@@ -66,7 +106,9 @@
     background: red;
 }
 
+/* 前进后退按钮 */
 .swiper-btn {
+    display: none;
     position: absolute;
     top: 50%;
     height: 50px;
