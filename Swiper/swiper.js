@@ -12,7 +12,7 @@
             hasFadeIndex = itemCount - 2, // 已经消失的元素
             willShowIndex = 2, // 待展示元素
             defaultOptions = {
-                speed: 4500,
+                speed: 4000,
                 animateSpeed: 300
             },
             bePre, beNext, beCur, beFade,
@@ -23,29 +23,24 @@
             left: '-25%',
             top: '15%',
             width: '70%',
-            height: '70%',
-            opacity: 1
+            height: '70%'
         };
         beNext = {
             left: '55%',
             top: '15%',
             width: '70%',
-            height: '70%',
-            opacity: 1
+            height: '70%'
         };
         beCur = {
             left: 0,
             top: 0,
-            right: 0,
             width: '100%',
-            height: '100%',
-            opacity: 1
+            height: '100%'
         };
         beFade = {
             left: 0,
             width: '70%',
-            height: '70%',
-            opacity: 0
+            height: '70%'
         };
 
         if (itemCount == 0) {
@@ -132,45 +127,71 @@
             switch (type) {
                 case 'bePre':
                     $dom
+                        .stop(false, false, true)
+                        .css({
+                            opacity: 1
+                        })
                         .removeClass('swiper-curItem')
                         .addClass('swiper-preItem')
                         .animate(bePre, animateSpeed);
                     break;
                 case 'backPre':
                     $dom
+                        .stop(false, false, true)
+                        .css({
+                            opacity: 1
+                        })
                         .addClass('swiper-preItem')
                         .animate(bePre, animateSpeed);
                     break;
                 case 'beCur':
                     $dom
+                        .stop(false, false, true)
+                        .css({
+                            opacity: 1
+                        })
                         .removeClass('swiper-nextItem')
                         .addClass('swiper-curItem')
                         .animate(beCur, animateSpeed);
                     break;
                 case 'backCur':
                     $dom
+                        .stop(false, false, true)
+                        .css({
+                            opacity: 1
+                        })
                         .removeClass('swiper-preItem')
                         .addClass('swiper-curItem')
                         .animate(beCur, animateSpeed);
                     break;
                 case 'beNext':
                     $dom
+                        .stop(false, false, true)
+                        .css({
+                            opacity: 1
+                        })
                         .addClass('swiper-nextItem')
                         .animate(beNext, animateSpeed);
                     break;
                 case 'backNext':
                     $dom
+                        .stop(false, false, true)
+                        .css({
+                            opacity: 1
+                        })
                         .removeClass('swiper-curItem')
                         .addClass('swiper-nextItem')
                         .animate(beNext, animateSpeed);
                     break;
                 case 'fade':
                     $dom
+                        .stop(false, false, true)
                         .removeClass('swiper-preItem')
                         .animate(beFade, animateSpeed);
                     break;
                 case 'backHide':
                     $dom
+                        .stop(false, false, true)
                         .removeClass('swiper-nextItem')
                         .animate(beFade, animateSpeed);
                     break;
