@@ -220,9 +220,9 @@
         };
 
         // 初始化位置类
-        setCss($($container.children()[preIndex]).addClass('swiper-preItem'), 'pre');
-        setCss($($container.children()[curIndex]).addClass('swiper-curItem'), 'cur');
-        setCss($($container.children()[nextIndex]).addClass('swiper-nextItem'), 'next');
+        setAnimate($($container.children()[preIndex]).addClass('swiper-preItem'), 'bePre');
+        setAnimate($($container.children()[curIndex]).addClass('swiper-curItem'), 'beCur');
+        setAnimate($($container.children()[nextIndex]).addClass('swiper-nextItem'), 'beNext');
 
         // 动画函数
         swiperGoNext = function (speed) {
