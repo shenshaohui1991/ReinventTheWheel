@@ -3,10 +3,10 @@
     margin-bottom: 35px;
     background: #f6f6f6;
     border-radius: 50% / 0 0 100% 100%;
+    /* 开启硬件加速 */
     -webkit-transform: translate3d(0, 0, 0);
-/ / 开启硬件加速 -moz-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-
 }
 
 .swiper-container {
@@ -65,8 +65,9 @@
 }
 
 .swiper-preItem {
+    /* 设定旋转位置 */
     -webkit-transform-origin: left;
-/ / 设定旋转位置 -moz-transform-origin: left;
+    -moz-transform-origin: left;
     transform-origin: left;
     -webkit-transfrom: rotateY(30deg);
     -moz-transfrom: rotateY(30deg);
@@ -75,8 +76,9 @@
 }
 
 .swiper-nextItem {
+    /* 设定旋转位置 */
     -webkit-transform-origin: right;
-/ / 设定旋转位置 -moz-transform-origin: right;
+    -moz-transform-origin: right;
     transform-origin: right;
     -webkit-transfrom: rotateY(-30deg);
     -moz-transfrom: rotateY(-30deg);
@@ -95,9 +97,10 @@
     left: 50%;
     bottom: 0;
     margin: 6px auto;
+    padding: 2px 9px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, .1);
     z-index: 50;
-    -webkit-transform: translateX(-50%);
-    transform: translateX(-50%);
     list-style: none;
 }
 
@@ -121,15 +124,15 @@
     position: absolute;
     top: 0;
     height: 100%;
-    width: 30%;
+    width: 40%;
     z-index: 50;
     background: transparent;
 }
 
 .goPrev-btn {
-    left: -32%;
+    left: -40%;
 }
 
 .goNext-btn {
-    left: 102%;
+    left: 100%;
 }

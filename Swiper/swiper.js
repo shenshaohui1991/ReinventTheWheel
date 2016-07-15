@@ -21,24 +21,26 @@
 
         beInit = {
             left: '0',
-            top: '15%',
-            width: '70%',
-            height: '70%',
+            top: '10%',
+            width: '80%',
+            height: '80%',
+            '-webkit-transform': 'translateZ(-600px)',
+            '-moz-transform': 'translateZ(-600px)',
             transform: 'translateZ(-600px)',
             opacity: 0
         };
         bePre = {
-            left: '-25%',
-            top: '15%',
-            width: '70%',
-            height: '70%',
+            left: '-40%',
+            top: '10%',
+            width: '80%',
+            height: '80%',
             opacity: 1
         };
         beNext = {
-            left: '55%',
-            top: '15%',
-            width: '70%',
-            height: '70%',
+            left: '60%',
+            top: '10%',
+            width: '80%',
+            height: '80%',
             opacity: 1
         };
         beCur = {
@@ -50,8 +52,8 @@
         };
         beFade = {
             left: 0,
-            width: '70%',
-            height: '70%',
+            width: '80%',
+            height: '80%',
             opacity: 0
         };
 
@@ -73,6 +75,9 @@
         }
         $container.append($dots);
         $dot = $dots.children('li');
+
+        // 居中
+        $dots.css({marginLeft: -$dots.outerWidth() / 2 + 'px'});
 
         // 添加左右可点击按钮
         $container.append($('<div class="swiper-btn goPrev-btn"></div>'));
@@ -141,6 +146,8 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(-200px) rotateY(30deg)',
+                            '-moz-transform': 'translateZ(-200px) rotateY(30deg)',
                             transform: 'translateZ(-200px) rotateY(30deg)'
                         })
                         .removeClass('swiper-curItem')
@@ -153,6 +160,8 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(-200px) rotateY(30deg)',
+                            '-moz-transform': 'translateZ(-200px) rotateY(30deg)',
                             transform: 'translateZ(-200px) rotateY(30deg)'
                         })
                         .addClass('swiper-preItem')
@@ -164,6 +173,8 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(0) rotateY(0)',
+                            '-moz-transform': 'translateZ(0) rotateY(0)',
                             transform: 'translateZ(0) rotateY(0)'
                         })
                         .removeClass('swiper-nextItem')
@@ -176,6 +187,8 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(0) rotateY(0)',
+                            '-moz-transform': 'translateZ(0) rotateY(0)',
                             transform: 'translateZ(0) rotateY(0)'
                         })
                         .removeClass('swiper-preItem')
@@ -188,6 +201,8 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(-200px) rotateY(-30deg)',
+                            '-moz-transform': 'translateZ(-200px) rotateY(-30deg)',
                             transform: 'translateZ(-200px) rotateY(-30deg)'
                         })
                         .addClass('swiper-nextItem')
@@ -199,6 +214,8 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(-200px) rotateY(-30deg)',
+                            '-moz-transform': 'translateZ(-200px) rotateY(-30deg)',
                             transform: 'translateZ(-200px) rotateY(-30deg)'
                         })
                         .removeClass('swiper-curItem')
@@ -211,6 +228,8 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(-600px)',
+                            '-moz-transform': 'translateZ(-600px)',
                             transform: 'translateZ(-600px)'
                         })
                         .removeClass('swiper-preItem')
@@ -222,28 +241,14 @@
                     $dom
                         .stop(false, false, true)
                         .css({
+                            '-webkit-transform': 'translateZ(-600px)',
+                            '-moz-transform': 'translateZ(-600px)',
                             transform: 'translateZ(-600px)'
                         })
                         .removeClass('swiper-nextItem')
                         .animate(beFade, animateSpeed, function () {
 
                         });
-                    break;
-            }
-        };
-
-        setCss = function ($dom, type) {
-            switch (type) {
-                case 'pre':
-                    $dom.css(bePre);
-                    break;
-                case 'cur':
-                    $dom.css(beCur);
-                    break;
-                case 'next':
-                    $dom.css(beNext);
-                    break;
-                default:
                     break;
             }
         };
