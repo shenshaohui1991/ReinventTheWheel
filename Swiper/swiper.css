@@ -3,10 +3,10 @@
     margin-bottom: 35px;
     background: #f6f6f6;
     border-radius: 50% / 0 0 100% 100%;
-/ / 半个椭圆 -webkit-transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
 / / 开启硬件加速 -moz-transform: translate3d(0, 0, 0);
-/ / 开启硬件加速 transform: translate3d(0, 0, 0);
-/ / 开启硬件加速
+    transform: translate3d(0, 0, 0);
+
 }
 
 .swiper-container {
@@ -17,9 +17,9 @@
     -webkit-perspective: 1200px;
     -moz-perspective: 1200px;
     perspective: 1200px;
-    -webkit-transform-style: preseve-3d;
-    -moz-transform-style: flat;
-    transform-style: flat;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 .swiper-item {
@@ -67,8 +67,8 @@
 .swiper-preItem {
     -webkit-transform-origin: left;
 / / 设定旋转位置 -moz-transform-origin: left;
-/ / 设定旋转位置 transform-origin: left;
-/ / 设定旋转位置 -webkit-transfrom: rotateY(30 deg);
+    transform-origin: left;
+    -webkit-transfrom: rotateY(30deg);
     -moz-transfrom: rotateY(30deg);
     transform: rotateY(30deg);
     z-index: 10;
@@ -77,8 +77,8 @@
 .swiper-nextItem {
     -webkit-transform-origin: right;
 / / 设定旋转位置 -moz-transform-origin: right;
-/ / 设定旋转位置 transform-origin: right;
-/ / 设定旋转位置 -webkit-transfrom: rotateY(- 30 deg);
+    transform-origin: right;
+    -webkit-transfrom: rotateY(-30deg);
     -moz-transfrom: rotateY(-30deg);
     transform: rotateY(-30deg);
     z-index: 10;
