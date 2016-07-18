@@ -10,7 +10,7 @@
                 words: 0
             };
         }])
-        .directive('contenteditable', [function () {
+        .directive('contenteditable', ['$window', '$document', function ($window, $document) {
             return {
                 restrict: 'A',
                 require: '?ngModel',
@@ -58,14 +58,22 @@
 
 
                     // TODO: 处理回车 && 复制粘贴
-                    element.on('keydown', function (e) {
-                        if (e.which == 13) {
-                            //e.preventDefault();
+                    element.on('keydown cut paste change', function () {
+                        if ($window.getSelection) {
+                            br = $document[0].createElement('br');
+                            selection = $window.getSelection();
 
+                            console.log(selection);
+
+                            /*range = selection.getRangeAt(0);
+                             range.deleteContents();
+                             range.insertNode(br);
+                             range.setStartAfter(br);
+                             range.setEndAfter(br);
+                             selection.removeAllRanges();
+                             selection.addRange(range);*/
                         }
-                    });
 
-                    element.on('keyup cut paste change', function () {
                         updateViewValue();
                     });
 
@@ -81,8 +89,14 @@
                     }
 
                     function updateViewValue() {
+                        var html = element.html();
+
+                        html = html.replace(/<div>/g, '');
+                        html = html.replace(/<\/div>/g, '\n');
+                        html = html.replace(/<br>/g, '\n');
+
                         scope.$apply(function () {
-                            ngModel.$setViewValue(element.html());
+                            ngModel.$setViewValue(html);
                             calcWords();
                         });
                     }
