@@ -56,25 +56,32 @@
                         updateViewValue();
                     });
 
+                    // 处理粘贴事件
+                    element.on('paste', function (event) {
+                        event.preventDefault();
 
-                    // TODO: 处理回车 && 复制粘贴
-                    element.on('keydown cut paste change', function () {
-                        if ($window.getSelection) {
-                            br = $document[0].createElement('br');
-                            selection = $window.getSelection();
+                        var data = window.clipboardData || event.originalEvent.clipboardData,
+                            text = data.getData('text/plain');
 
-                            console.log(selection);
+                        document.execCommand("insertText", false, text); // 自带格式
 
-                            /*range = selection.getRangeAt(0);
-                             range.deleteContents();
-                             range.insertNode(br);
-                             range.setStartAfter(br);
-                             range.setEndAfter(br);
-                             selection.removeAllRanges();
-                             selection.addRange(range);*/
+                        updateViewValue();
+                    });
+
+                    // 处理回车事件
+                    element.on('keyup', function (e) {
+                        if (e.which == 13) {
+                            e.preventDefault();
                         }
 
                         updateViewValue();
+                    });
+
+                    // TODO: 处理剪切事件
+                    element.on('keydown cut change input', function (e) {
+                        if (e.which != 13) {
+                            updateViewValue();
+                        }
                     });
 
                     calcWords();
@@ -91,6 +98,7 @@
                     function updateViewValue() {
                         var html = element.html();
 
+                        html = html.replace(/<div>/, '\n'); // 替换第一个div解决，从WORD复制进来的文字的换行问题
                         html = html.replace(/<div>/g, '');
                         html = html.replace(/<\/div>/g, '\n');
                         html = html.replace(/<br>/g, '\n');

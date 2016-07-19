@@ -10,9 +10,18 @@
 <body>
 <div ng-controller="myCtrl">
     <div class="editable-content" contenteditable ng-model="data.htmlContent" words="data.words" placeholder="hahahah"></div>
+
+    <h3>in textarea</h3>
     <textara>
         {{data.htmlContent}}
     </textara>
+
+    <h3>in div</h3>
+    <div>
+        {{data.htmlContent}}
+    </div>
+
+    <h3>words</h3>
     <div>
         {{data.words}}
     </div>
