@@ -10,7 +10,7 @@
                 words: 0
             };
         }])
-        .directive('contenteditable', ['$window', '$document', function ($window, $document) {
+        .directive('contenteditable', ['$window', '$document', '$sce', function ($window, $document, $sce) {
             return {
                 restrict: 'A',
                 require: '?ngModel',
@@ -98,10 +98,19 @@
                     function updateViewValue() {
                         var html = element.html();
 
-                        html = html.replace(/<div>/, '\n'); // 替换第一个div解决，从WORD复制进来的文字的换行问题
-                        html = html.replace(/<div>/g, '');
-                        html = html.replace(/<\/div>/g, '\n');
-                        html = html.replace(/<br>/g, '\n');
+                        if (attrs.single) {
+                            // 强制不换行
+                            html = html.replace(/<div>/g, '');
+                            html = html.replace(/<\/div>/g, '');
+                            html = html.replace(/<br>/g, '');
+
+                            element.html(html);
+                        } else {
+                            html = html.replace(/<div>/, '\n'); // 替换第一个div解决，从WORD复制进来的文字的换行问题
+                            html = html.replace(/<div>/g, '');
+                            html = html.replace(/<\/div>/g, '\n');
+                            html = html.replace(/<br>/g, '\n');
+                        }
 
                         scope.$apply(function () {
                             ngModel.$setViewValue(html);
