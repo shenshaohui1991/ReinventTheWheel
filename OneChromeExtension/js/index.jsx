@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var Reflux = require('reflux');
 var Clock = require('./clock.jsx');
 var TimerStores = require('./TimerStores');
+var Todos = require('./todos.jsx');
 
 require('../stylus/index.styl');
 
@@ -19,9 +20,15 @@ var Container = React.createClass({
                 (date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()),
             switchStatus = this.state.timer.switch,
             loopStatus = this.state.timer.loop,
-            isRelax = !!this.state.timer.relaxTimer;
+            isRelax = !!this.state.timer.relaxTimer,
+            list = ['where', 'is', 'my', 'data'];
 
-        return <Clock time={result} switch={switchStatus} loop={loopStatus} relax={isRelax}/>
+        return (
+            <div>
+                <Clock time={result} switch={switchStatus} loop={loopStatus} relax={isRelax}/>
+                <Todos todos={list}/>
+            </div>
+        );
     }
 });
 

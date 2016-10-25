@@ -6,6 +6,10 @@ var TomatoActions = require('./TimerActions');
 
 require('../stylus/clock.styl');
 
+if (module.hot) {
+    module.hot.accept();
+}
+
 module.exports = React.createClass({
     handleLoop: function () {
         TomatoActions.handleLoop();
@@ -26,6 +30,7 @@ module.exports = React.createClass({
                 <span className={loopClazz} onClick={this.handleLoop}></span>
                 <span className={timeClazz}>{timeStr}</span>
                 <span className={switchClazz} onClick={this.handleSwitch}></span>
+                <audio src="./tick.mp3" autoPlay="true"></audio>
             </div>
         );
     }
